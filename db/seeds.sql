@@ -30,4 +30,4 @@ VALUES
 ("Malcom", "Graves", 7),
 ("Sarah", "Fortune", 1);
 
-SELECT * FROM employee
+SELECT * FROM employee;
