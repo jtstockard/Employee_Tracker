@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const db = require("./db/connectorClass");
+const figlet = require("figlet");
 
 const promptMessages = {
   viewEmployees: "View all Employees",
@@ -354,5 +355,12 @@ async function deleteRole() {
   console.log(`Succesfully deleted ${answer.title} from the database.`);
 }
 
-console.log(data);
-prompt();
+figlet("Employee Tracker", function (err, data) {
+  if (err) {
+    console.log("Something went wrong...");
+    console.dir(err);
+    return;
+  }
+  console.log(data);
+  prompt();
+});
