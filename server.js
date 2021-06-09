@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const db = require("./db/connectorClass");
+const db = require("./class");
 const figlet = require("figlet");
 
 const promptMessages = {
@@ -229,6 +229,12 @@ async function addDepartment() {
   console.log(`Added ${answer.department} to the the database.`);
 }
 async function addRole() {
+  const departments = await db.findDepartment();
+
+  const departmentList = departments.map((record) => {
+    return record.name;
+  });
+
   const answer = await inquirer.prompt([
     {
       name: "role",
@@ -240,9 +246,20 @@ async function addRole() {
       type: "input",
       message: "What is the salary for that role?",
     },
+    {
+      name: "department",
+      type: "list",
+      message: "Which department is this for?",
+      choices: departmentList,
+    },
   ]);
+  const departmentRecord = departments.find(
+    (resultEntry) => answer.department === resultEntry.name
+  );
+  const departmentId = departmentRecord.id;
 
-  const res = await db.addRole(answer.role, answer.salary);
+  const res = await db.addRole(answer.role, answer.salary, departmentId);
+
   console.log(`Added ${answer.role} to the the database.`);
 }
 

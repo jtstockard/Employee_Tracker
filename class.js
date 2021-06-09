@@ -79,10 +79,11 @@ class DB {
     });
   }
 
-  addRole(role, salary) {
+  addRole(role, salary, department_id) {
     return this.connection.query("INSERT INTO role SET ?", {
       title: role,
       salary: salary,
+      department_id: department_id,
     });
   }
 
@@ -92,6 +93,10 @@ class DB {
 
   findRoles() {
     return this.connection.query("SELECT id, title FROM role");
+  }
+
+  findDepartment() {
+    return this.connection.query("SELECT id, name FROM department");
   }
 
   updateEmployeeRole(role_id, id) {
